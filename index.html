@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archana's Stitching Center | Parwatti, Bhagalpur</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#d81b60',
+                            light: '#f8bbd0',
+                            dark: '#ad1457',
+                            pinkbg: '#fff0f3'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d81b60; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-light selection:text-brand-dark">
+
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-sm">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-msg">Action completed successfully!</span>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-brand rounded-full flex items-center justify-center text-white text-2xl shadow-lg">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <div>
+                        <a href="#" class="font-serif text-2xl sm:text-3xl font-bold tracking-wide text-brand-light">Archana's <span class="text-white">Stitching Center</span></a>
+                        <p class="text-xs text-slate-300 italic">Parwatti, Bhagalpur, Bihar</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex items-center space-x-8 font-medium text-sm">
+                    <a href="#home" class="hover:text-brand-light transition">Home</a>
+                    <a href="#services" class="hover:text-brand-light transition">Categories</a>
+                    <a href="#designs" class="hover:text-brand-light transition">Designs Gallery</a>
+                    <a href="#updates" class="hover:text-brand-light transition">Updates</a>
+                    <a href="#about" class="hover:text-brand-light transition">About Us</a>
+                    <a href="#contact" class="hover:text-brand-light transition">Contact</a>
+                </nav>
+
+                <!-- Quick Action Icons -->
+                <div class="hidden sm:flex items-center space-x-4">
+                    <button onclick="openSearchModal()" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition" title="Search Designs">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <!-- Admin Login Button -->
+                    <button id="admin-nav-btn" onclick="openAdminModal()" class="px-3.5 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white transition flex items-center space-x-1.5" title="Admin Login">
+                        <i class="fa-solid fa-lock text-brand-light"></i>
+                        <span id="admin-btn-text">Admin Login</span>
+                    </button>
+                    <a href="https://wa.me/919341758079?text=Hello%20Archana,%20I%20want%20to%20inquire%20about%20your%20stitching%20services." target="_blank" class="w-10 h-10 rounded-full bg-emerald-600 hover:bg-emerald-500 flex items-center justify-center text-white transition shadow-lg" title="Chat on WhatsApp">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center space-x-3">
+                    <a href="https://wa.me/919341758079?text=Hello%20Archana,%20I%20want%20to%20inquire%20about%20your%20stitching%20services." target="_blank" class="w-9 h-9 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="text-white text-2xl focus:outline-none">
+                        <i class="fa-solid fa-bars" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-800 border-t border-slate-700 px-4 pt-3 pb-5 space-y-3">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">Home</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">Categories</a>
+            <a href="#designs" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">Designs Gallery</a>
+            <a href="#updates" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">Updates</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">About Us</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-sm hover:text-brand-light">Contact</a>
+            <div class="pt-2 flex space-x-2">
+                <button onclick="openSearchModal(); toggleMobileMenu();" class="flex-1 bg-slate-700 text-white py-2 rounded-lg text-xs font-medium">Search Catalog</button>
+                <button onclick="openAdminModal(); toggleMobileMenu();" class="flex-1 bg-brand text-white py-2 rounded-lg text-xs font-medium" id="mobile-admin-btn">Admin Login</button>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="relative bg-gradient-to-r from-slate-900 via-rose-950 to-slate-900 text-white py-16 lg:py-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#d81b60_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-brand/20 border border-brand/40 px-4 py-1.5 rounded-full text-brand-light text-xs sm:text-sm font-semibold tracking-wider uppercase">
+                        <span><i class="fa-solid fa-location-dot mr-1"></i> Parwatti, Bhagalpur, Bihar</span>
+                    </div>
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                        Archana's <span class="text-brand-light">Stitching Center</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
+                        "हर Design में है एक कहानी" — Expert custom tailoring, designer blouses, elegant kurtis, stunning lehengas, and perfect alterations crafted exclusively for you.
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#designs" class="bg-brand hover:bg-brand-dark text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-brand/30 transition transform hover:-translate-y-0.5 flex items-center space-x-2">
+                            <span>Explore Designs</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="https://wa.me/919341758079?text=Hello%20Archana,%20I%20would%20like%20to%20book%20an%20appointment." target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3.5 rounded-full font-semibold shadow-lg transition transform hover:-translate-y-0.5 flex items-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>WhatsApp +91 93417 58079</span>
+                        </a>
+                    </div>
+                    <div class="pt-4 flex items-center justify-center lg:justify-start space-x-6 text-slate-300 text-sm">
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-brand-light"></i><span>Perfect Fit</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-brand-light"></i><span>On-Time Delivery</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-brand-light"></i><span>Latest Trends</span></div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-2xl border-4 border-white/10 group">
+                        <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=800&q=80" alt="Archana's Stitching Center" class="w-full h-[380px] sm:h-[450px] object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/800x500/d81b60/ffffff?text=Archana+Stitching+Center'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-6">
+                            <span class="text-brand-light text-xs font-bold tracking-widest uppercase mb-1">Parwatti, Bhagalpur</span>
+                            <h3 class="font-serif text-2xl font-bold">Stitching Your Dreams, One Design at a Time</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand font-semibold text-sm uppercase tracking-widest">Stitching Categories</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Explore By Specialty Boxes</h2>
+                <div class="w-20 h-1 bg-brand mx-auto mt-3 rounded-full"></div>
+                <p class="text-slate-600 mt-3 text-sm sm:text-base">Click any category box below to view tailored designs and stitching ideas.</p>
+            </div>
+
+            <!-- Categories Grid Boxes -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Saree -->
+                <div onclick="filterCategory('Saree')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Saree Blouses</h3>
+                    <p class="text-xs text-slate-500 mt-1">Designer & Wedding Drapes</p>
+                </div>
+
+                <!-- Blouse -->
+                <div onclick="filterCategory('Blouse')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-vest"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Blouse Patterns</h3>
+                    <p class="text-xs text-slate-500 mt-1">Regular & Designer Necklines</p>
+                </div>
+
+                <!-- Kurti -->
+                <div onclick="filterCategory('Kurti')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-female"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Kurti Collection</h3>
+                    <p class="text-xs text-slate-500 mt-1">Traditional & Modern Fits</p>
+                </div>
+
+                <!-- Lehenga -->
+                <div onclick="filterCategory('Lehenga')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Lehenga Suits</h3>
+                    <p class="text-xs text-slate-500 mt-1">Party & Bridal Wear</p>
+                </div>
+
+                <!-- Alteration -->
+                <div onclick="filterCategory('Alteration')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Expert Alteration</h3>
+                    <p class="text-xs text-slate-500 mt-1">Perfect Fit & Tailoring</p>
+                </div>
+
+                <!-- Custom Designs -->
+                <div onclick="filterCategory('Custom')" class="group bg-brand-pinkbg/60 border border-brand/20 hover:border-brand p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full shadow-md flex items-center justify-center text-brand text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-slate-900 group-hover:text-brand transition">Custom Designs</h3>
+                    <p class="text-xs text-slate-500 mt-1">Made as Per Your Wish</p>
+                </div>
+
+                <!-- Other Category Box (Required Last Box) -->
+                <div onclick="filterCategory('Other')" class="group bg-gradient-to-br from-brand-dark to-brand text-white p-6 rounded-2xl text-center cursor-pointer transition transform hover:-translate-y-1 hover:shadow-xl col-span-2 sm:col-span-1">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full shadow-md flex items-center justify-center text-white text-2xl group-hover:scale-110 transition">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-white">Other Creations</h3>
+                    <p class="text-xs text-brand-light mt-1">Gowns, Kids Wear & More</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="designs" class="py-16 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-brand font-semibold text-sm uppercase tracking-widest">Stitching Portfolio</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Latest Design Gallery</h2>
+                    <div class="w-20 h-1 bg-brand mt-3 rounded-full"></div>
+                </div>
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0" id="filter-buttons">
+                    <button onclick="filterCategory('All')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-brand text-white shadow transition">All</button>
+                    <button onclick="filterCategory('Saree')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition">Saree</button>
+                    <button onclick="filterCategory('Blouse')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition">Blouse</button>
+                    <button onclick="filterCategory('Kurti')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition">Kurti</button>
+                    <button onclick="filterCategory('Lehenga')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition">Lehenga</button>
+                    <button onclick="filterCategory('Other')" class="filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition">Other</button>
+                </div>
+            </div>
+
+            <!-- Secure Admin Upload Container (Only visible when logged in as Admin) -->
+            <div id="admin-upload-container" class="hidden bg-brand-pinkbg/60 border-2 border-dashed border-brand/40 p-6 sm:p-8 rounded-3xl shadow-sm mb-12">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-serif font-bold text-xl text-slate-900 flex items-center">
+                        <i class="fa-solid fa-shield-halved text-brand mr-2"></i> Admin Panel: Upload New Design
+                    </h3>
+                    <button onclick="logoutAdmin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold">Logout Admin</button>
+                </div>
+                <form id="upload-form" onsubmit="handleAdminUpload(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Title / Design Name</label>
+                            <input type="text" id="uploader-title" required placeholder="e.g., Royal Bridal Blouse" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Category</label>
+                            <select id="upload-category" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                                <option value="Blouse">Blouse</option>
+                                <option value="Kurti">Kurti</option>
+                                <option value="Saree">Saree & Drape</option>
+                                <option value="Lehenga">Lehenga Suit</option>
+                                <option value="Alteration">Alteration</option>
+                                <option value="Custom">Custom Design</option>
+                                <option value="Other">Other Creation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Image URL or Sample</label>
+                        <div class="flex space-x-2">
+                            <input type="url" id="upload-image" required placeholder="https://images.unsplash.com/photo-..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                            <button type="button" onclick="setRandomSampleImage()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-medium">Use Sample</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Description / Details</label>
+                        <input type="text" id="upload-caption" required placeholder="e.g., Beautiful boat neck blouse stitched perfectly by Archana Ji!" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                    </div>
+                    <button type="submit" class="w-full sm:w-auto bg-brand hover:bg-brand-dark text-white px-8 py-3 rounded-xl font-semibold shadow-md transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Publish New Design</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Guest notice -->
+            <div id="guest-notice" class="bg-white border border-slate-200 p-4 rounded-2xl text-center mb-10 text-xs sm:text-sm text-slate-600 flex items-center justify-center space-x-2 shadow-sm">
+                <i class="fa-solid fa-circle-info text-brand"></i>
+                <span>Only <strong class="text-slate-900">Archana (Admin)</strong> can upload new designs via secure Firebase Authentication. Are you the admin? <button onclick="openAdminModal()" class="text-brand font-semibold underline hover:text-brand-dark ml-1">Login here</button></span>
+            </div>
+
+            <!-- Design Cards Grid -->
+            <div id="designs-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </section>
+
+    <section id="updates" class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Latest Updates -->
+                <div class="bg-slate-50 p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-serif text-2xl font-bold text-slate-900">Latest Updates</h3>
+                        <span class="bg-brand-pinkbg text-brand-dark text-xs px-3 py-1 rounded-full font-semibold">Parwatti Center</span>
+                    </div>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4 pb-4 border-b border-slate-200/60">
+                            <div class="w-12 h-12 bg-brand-light text-brand-dark rounded-2xl flex items-center justify-center font-bold text-lg shrink-0">12</div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-medium">October 2026</span>
+                                <h4 class="font-bold text-slate-900 text-sm mt-0.5">Festive Anarkali Suit Collection Added</h4>
+                                <p class="text-xs text-slate-600 mt-1">Explore our new festive royal threadwork suits available for custom stitching.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4 pb-4 border-b border-slate-200/60">
+                            <div class="w-12 h-12 bg-brand-light text-brand-dark rounded-2xl flex items-center justify-center font-bold text-lg shrink-0">05</div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-medium">October 2026</span>
+                                <h4 class="font-bold text-slate-900 text-sm mt-0.5">New Designer Blouse Necklines</h4>
+                                <p class="text-xs text-slate-600 mt-1">Added 20+ bridal and party-wear backless & potli button blouse patterns.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-brand-light text-brand-dark rounded-2xl flex items-center justify-center font-bold text-lg shrink-0">28</div>
+                            <div>
+                                <span class="text-xs text-slate-400 font-medium">September 2026</span>
+                                <h4 class="font-bold text-slate-900 text-sm mt-0.5">Express Alteration Service Available</h4>
+                                <p class="text-xs text-slate-600 mt-1">Get your clothes perfectly fitted within 24 hours at our Parwatti center.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Us -->
+                <div id="about" class="bg-slate-50 p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <span class="text-brand font-semibold text-sm uppercase tracking-widest">About The Maker</span>
+                        <h3 class="font-serif text-2xl font-bold text-slate-900 mt-1 mb-4">Archana's Stitching Center</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-4">
+                            Archana's Stitching Center is a premier boutique and tailoring unit located in Parwatti, Bhagalpur, Bihar. We specialize in creating custom-fit traditional and modern ethnic wear with exceptional attention to detail.
+                        </p>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                            From everyday kurtis to heavy bridal lehengas and designer blouses, our mission is to bring your fashion ideas to life with precise fitting and premium craftsmanship.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200 text-center">
+                        <div>
+                            <div class="font-bold text-brand text-xl">500+</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Happy Clients</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-brand text-xl">100%</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Perfect Fit</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-brand text-xl">5+</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Years Experience</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-brand text-xl">24/7</div>
+                            <div class="text-xs text-slate-500 mt-0.5">WhatsApp Support</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-light font-semibold text-sm uppercase tracking-widest">Get In Touch</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-2">Visit Our Center or Book Online</h2>
+                <div class="w-20 h-1 bg-brand mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Contact Info Card -->
+                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 space-y-6">
+                    <h3 class="font-serif text-xl font-bold text-brand-light">Contact Details</h3>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 text-brand-light flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <strong class="block text-white">Location:</strong>
+                                <span class="text-slate-300">Parwatti, Bhagalpur, Bihar - 812002</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 text-brand-light flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <strong class="block text-white">Phone & WhatsApp:</strong>
+                                <a href="tel:+919341758079" class="text-brand-light hover:underline">+91 93417 58079</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-brand/20 text-brand-light flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <strong class="block text-white">Working Hours:</strong>
+                                <span class="text-slate-300">Mon - Sat: 9:00 AM - 8:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/919341758079?text=Hello%20Archana,%20I%20would%20like%20to%20visit%20your%20stitching%20center%20in%20Parwatti." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-semibold flex items-center justify-center space-x-2 shadow-lg transition">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Chat on WhatsApp Now</span>
+                    </a>
+                </div>
+
+                <!-- Quick Inquiry Form -->
+                <div class="lg:col-span-2 bg-slate-800 p-8 rounded-3xl border border-slate-700">
+                    <h3 class="font-serif text-xl font-bold text-brand-light mb-4">Send a Direct Message</h3>
+                    <form onsubmit="handleInquiry(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-300 mb-1">Your Name</label>
+                                <input type="text" id="inquiry-name" required placeholder="e.g., Anjali Sharma" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-brand focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase font-semibold text-slate-300 mb-1">Phone Number</label>
+                                <input type="tel" id="inquiry-phone" required placeholder="e.g., 9876543210" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-brand focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-slate-300 mb-1">Service Required</label>
+                            <select id="inquiry-service" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-brand focus:outline-none">
+                                <option value="Blouse Stitching">Blouse Stitching</option>
+                                <option value="Kurti Stitching">Kurti Stitching</option>
+                                <option value="Saree & Drape">Saree & Blouse Set</option>
+                                <option value="Lehenga Suit">Lehenga Suit</option>
+                                <option value="Alteration">Cloth Alteration</option>
+                                <option value="Custom Design">Other Custom Design</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase font-semibold text-slate-300 mb-1">Your Message / Requirements</label>
+                            <textarea id="inquiry-msg" rows="3" required placeholder="Describe what you want stitched..." class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-brand focus:outline-none"></textarea>
+                        </div>
+                        <button type="submit" class="bg-brand hover:bg-brand-dark text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition flex items-center space-x-2">
+                            <span>Send Message</span>
+                            <i class="fa-solid fa-paper-plane text-xs"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Copyright -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-brand rounded-full flex items-center justify-center text-white text-xl">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold text-white">Archana's Stitching Center</span>
+                        <p class="text-xs text-slate-400">Parwatti, Bhagalpur, Bihar | +91 93417 58079</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="https://wa.me/919341758079" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-emerald-600 text-white flex items-center justify-center transition"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                    <a href="tel:+919341758079" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-brand text-white flex items-center justify-center transition"><i class="fa-solid fa-phone"></i></a>
+                    <a href="#contact" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-brand text-white flex items-center justify-center transition"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-800/80 text-center text-xs text-slate-500">
+                &copy; 2026 Archana's Stitching Center, Parwatti, Bhagalpur, Bihar. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div id="search-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-3xl p-6 shadow-2xl relative">
+            <button onclick="closeSearchModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="font-serif text-xl font-bold text-slate-900 mb-4">Search Designs & Services</h3>
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search blouse, kurti, lehenga, saree..." class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+            </div>
+            <div id="search-results" class="mt-4 max-h-60 overflow-y-auto space-y-2 custom-scrollbar">
+                <!-- Search results injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeAdminModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-brand-light text-brand-dark rounded-full mx-auto flex items-center justify-center text-2xl mb-3 shadow-inner">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 class="font-serif text-2xl font-bold text-slate-900">Secure Admin Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Firebase Cloud Authentication</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Admin Email</label>
+                    <input type="email" id="admin-email" required placeholder="archana@stitching.com" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-700 mb-1">Password</label>
+                    <input type="password" id="admin-pass" required placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-brand focus:outline-none text-sm">
+                    <p class="text-[11px] text-slate-400 mt-1">Protected by Firebase Auth. Only authorized admin credentials can upload.</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button type="submit" class="flex-1 bg-brand hover:bg-brand-dark text-white py-3 rounded-xl font-semibold shadow-lg transition">Login</button>
+                    <button type="button" onclick="setupInitialAdmin()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-3 rounded-xl text-xs font-medium">Create Admin Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'archana-stitching-center-bhagalpur';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "AIzaSyDummyKeyForArtifacts12345",
+            authDomain: "archana-stitching.firebaseapp.com",
+            projectId: "archana-stitching",
+            storageBucket: "archana-stitching.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef"
+        };
+
+        let app, db, auth;
+        let currentUser = null;
+        let designsData = [];
+
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                signInWithCustomToken(auth, __initial_auth_token).catch(() => signInAnonymously(auth));
+            } else {
+                signInAnonymously(auth).catch(err => console.log("Anon auth note:", err));
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                updateAdminUI();
+            });
+        } catch(e) {
+            console.error("Firebase init error:", e);
+        }
+
+        window.openAdminModal = openAdminModal;
+        window.closeAdminModal = closeAdminModal;
+        window.handleAdminLogin = handleAdminLogin;
+        window.logoutAdmin = logoutAdmin;
+        window.setupInitialAdmin = setupInitialAdmin;
+        window.handleAdminUpload = handleAdminUpload;
+        window.filterCategory = filterCategory;
+        window.likePortfolioDesign = likePortfolioDesign;
+        window.deleteDesign = deleteDesign;
+        window.openSearchModal = openSearchModal;
+        window.closeSearchModal = closeSearchModal;
+        window.handleSearch = handleSearch;
+        window.setRandomSampleImage = setRandomSampleImage;
+        window.handleInquiry = handleInquiry;
+
+        const defaultDesigns = [
+            {
+                id: "d1",
+                title: "Royal Threadwork Anarkali Suit",
+                category: "Lehenga",
+                image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
+                description: "Elegant magenta festive lehenga suit with intricate embroidery and perfect flair.",
+                likes: 42
+            },
+            {
+                id: "d2",
+                title: "Designer Backless Potli Blouse",
+                category: "Blouse",
+                image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+                description: "Pink designer blouse featuring Dori back ties and custom golden piping.",
+                likes: 38
+            },
+            {
+                id: "d3",
+                title: "Handcrafted Yellow Embroidered Kurti",
+                category: "Kurti",
+                image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80",
+                description: "Vibrant yellow cotton kurti with delicate neck embroidery for everyday elegance.",
+                likes: 29
+            },
+            {
+                id: "d4",
+                title: "Bridal Heavy Zari Work Saree Set",
+                category: "Saree",
+                image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
+                description: "Exquisite saree blouse matching set with handcrafted borders.",
+                likes: 51
+            }
+        ];
+
+        window.onload = function() {
+            loadFirestoreData();
+        };
+
+        function loadFirestoreData() {
+            if (!db) {
+                designsData = defaultDesigns;
+                renderDesigns('All');
+                return;
+            }
+
+            try {
+                const designsQuery = query(collection(db, 'artifacts', appId, 'public', 'data', 'designs'));
+                onSnapshot(designsQuery, (snapshot) => {
+                    designsData = [];
+                    snapshot.forEach(docSnap => {
+                        designsData.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    if (designsData.length === 0) {
+                        designsData = defaultDesigns;
+                    }
+                    renderDesigns('All');
+                }, (error) => {
+                    console.log("Firestore fallback:", error);
+                    designsData = defaultDesigns;
+                    renderDesigns('All');
+                });
+            } catch(e) {
+                designsData = defaultDesigns;
+                renderDesigns('All');
+            }
+        }
+
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        async function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('admin-email').value.trim();
+            const pass = document.getElementById('admin-pass').value.trim();
+
+            if (!auth) {
+                showToast("Firebase Auth not connected!");
+                return;
+            }
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+                currentUser = userCredential.user;
+                closeAdminModal();
+                updateAdminUI();
+                showToast("Admin Login Successful! Welcome Archana Ji.");
+                document.getElementById('admin-upload-container').scrollIntoView({ behavior: 'smooth' });
+            } catch(e) {
+                showToast("Login failed: Check email or password.");
+                console.error(e);
+            }
+            event.target.reset();
+        }
+
+        async function setupInitialAdmin() {
+            const email = document.getElementById('admin-email').value.trim();
+            const pass = document.getElementById('admin-pass').value.trim();
+            if (!email || !pass) {
+                showToast("Enter email and password first to create admin account.");
+                return;
+            }
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                currentUser = cred.user;
+                closeAdminModal();
+                updateAdminUI();
+                showToast("Admin account created & logged in successfully!");
+            } catch(e) {
+                showToast("Error: " + e.message);
+            }
+        }
+
+        async function logoutAdmin() {
+            if (auth) {
+                await signOut(auth);
+            }
+            currentUser = null;
+            updateAdminUI();
+            showToast("Logged out from Admin panel.");
+        }
+
+        function updateAdminUI() {
+            const container = document.getElementById('admin-upload-container');
+            const notice = document.getElementById('guest-notice');
+            const btnText = document.getElementById('admin-btn-text');
+            const mobileBtn = document.getElementById('mobile-admin-btn');
+
+            const isAdmin = currentUser && !currentUser.isAnonymous;
+
+            if (isAdmin) {
+                if(container) container.classList.remove('hidden');
+                if(notice) notice.classList.add('hidden');
+                if(btnText) btnText.textContent = "Admin Active";
+                if(mobileBtn) {
+                    mobileBtn.textContent = "Admin Active";
+                    mobileBtn.className = "flex-1 bg-emerald-600 text-white py-2 rounded-lg text-xs font-medium";
+                }
+            } else {
+                if(container) container.classList.add('hidden');
+                if(notice) notice.classList.remove('hidden');
+                if(btnText) btnText.textContent = "Admin Login";
+                if(mobileBtn) {
+                    mobileBtn.textContent = "Admin Login";
+                    mobileBtn.className = "flex-1 bg-brand text-white py-2 rounded-lg text-xs font-medium";
+                }
+            }
+            renderDesigns(currentCategoryFilter);
+        }
+
+        let currentCategoryFilter = 'All';
+
+        function filterCategory(category) {
+            currentCategoryFilter = category;
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim().toLowerCase() === category.toLowerCase() || (category === 'All' && btn.textContent.trim() === 'All')) {
+                    btn.className = "filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-brand text-white shadow transition";
+                } else {
+                    btn.className = "filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-slate-700 hover:bg-brand-light transition";
+                }
+            });
+
+            renderDesigns(category);
+            document.getElementById('designs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderDesigns(category) {
+            const grid = document.getElementById('designs-grid');
+            if(!grid) return;
+            const filtered = category === 'All' ? designsData : designsData.filter(d => d.category && d.category.toLowerCase() === category.toLowerCase());
+            
+            const isAdmin = currentUser && !currentUser.isAnonymous;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">No designs found in this category yet. Check back soon or upload via admin panel!</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-slate-200 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="relative overflow-hidden h-64">
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x400/d81b60/ffffff?text=Design'">
+                            <span class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-medium">${item.category}</span>
+                            ${isAdmin ? `<button onclick="deleteDesign('${item.id}')" class="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-lg" title="Delete Design"><i class="fa-solid fa-trash"></i></button>` : ''}
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif font-bold text-xl text-slate-900 mb-2">${item.title}</h3>
+                            <p class="text-slate-600 text-sm mb-4">${item.description || ''}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 border-t border-slate-100 flex items-center justify-between">
+                        <button onclick="likePortfolioDesign('${item.id}')" class="text-slate-600 hover:text-brand flex items-center space-x-1.5 text-sm font-medium">
+                            <i class="fa-solid fa-heart text-brand"></i>
+                            <span>${item.likes || 0} Likes</span>
+                        </button>
+                        <a href="https://wa.me/919341758079?text=Hello%20Archana,%20I%20want%20this%20design%20stitched:%20${encodeURIComponent(item.title)}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow transition flex items-center space-x-1">
+                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                            <span>Book Stitching</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function likePortfolioDesign(id) {
+            const item = designsData.find(d => d.id === id);
+            if (item) {
+                item.likes = (item.likes || 0) + 1;
+                renderDesigns(currentCategoryFilter);
+                if (db && !id.toString().startsWith('d')) {
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'designs', id), { likes: item.likes });
+                    } catch(e) { console.log(e); }
+                }
+                showToast("Liked design successfully!");
+            }
+        }
+
+        async function deleteDesign(id) {
+            const isAdmin = currentUser && !currentUser.isAnonymous;
+            if (!isAdmin) return;
+            designsData = designsData.filter(d => d.id !== id);
+            renderDesigns(currentCategoryFilter);
+            if (db && !id.toString().startsWith('d')) {
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'designs', id));
+                } catch(e) { console.log(e); }
+            }
+            showToast("Design deleted from cloud database.");
+        }
+
+        async function handleAdminUpload(event) {
+            event.preventDefault();
+            const isAdmin = currentUser && !currentUser.isAnonymous;
+            if (!isAdmin) {
+                showToast("Unauthorized! Please login as Admin.");
+                return;
+            }
+
+            const title = document.getElementById('uploader-title').value;
+            const category = document.getElementById('upload-category').value;
+            const image = document.getElementById('upload-image').value;
+            const caption = document.getElementById('upload-caption').value;
+
+            const newDesignObj = {
+                title: title,
+                category: category,
+                image: image,
+                description: caption,
+                likes: 1,
+                createdAt: Date.now()
+            };
+
+            if (db) {
+                try {
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'designs'), newDesignObj);
+                    showToast("Published securely to Firebase Firestore!");
+                } catch(e) {
+                    console.error(e);
+                    showToast("Error saving to cloud database.");
+                }
+            } else {
+                designsData.unshift({ id: 'local-' + Date.now(), ...newDesignObj });
+                renderDesigns('All');
+                showToast("Design published locally!");
+            }
+
+            document.getElementById('upload-form').reset();
+        }
+
+        const sampleImages = [
+            "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80",
+            "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=600&q=80"
+        ];
+
+        function setRandomSampleImage() {
+            const randomImg = sampleImages[Math.floor(Math.random() * sampleImages.length)];
+            const imgInput = document.getElementById('upload-image');
+            if(imgInput) imgInput.value = randomImg;
+            showToast("Sample design image selected!");
+        }
+
+        function openSearchModal() {
+            const modal = document.getElementById('search-modal');
+            if(modal) modal.classList.remove('hidden');
+            const searchInput = document.getElementById('search-input');
+            if(searchInput) searchInput.focus();
+        }
+
+        function closeSearchModal() {
+            const modal = document.getElementById('search-modal');
+            if(modal) modal.classList.add('hidden');
+        }
+
+        function handleSearch(queryStr) {
+            const resultsContainer = document.getElementById('search-results');
+            if (!resultsContainer) return;
+            if (!queryStr.trim()) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const q = queryStr.toLowerCase();
+            const matched = designsData.filter(d => (d.title && d.title.toLowerCase().includes(q)) || (d.category && d.category.toLowerCase().includes(q)) || (d.description && d.description.toLowerCase().includes(q)));
+
+            if (matched.length === 0) {
+                resultsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">No designs found matching "${queryStr}".</p>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = matched.map(item => `
+                <div onclick="closeSearchModal(); filterCategory('${item.category}');" class="flex items-center space-x-3 p-2.5 rounded-xl hover:bg-slate-100 cursor-pointer transition">
+                    <img src="${item.image}" class="w-12 h-12 rounded-lg object-cover">
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-900">${item.title}</h4>
+                        <span class="text-xs text-brand font-medium">${item.category} Category</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if(menu) menu.classList.toggle('hidden');
+            if(icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-xmark');
+            }
+        }
+
+        function handleInquiry(event) {
+            event.preventDefault();
+            const name = document.getElementById('inquiry-name').value;
+            const phone = document.getElementById('inquiry-phone').value;
+            const service = document.getElementById('inquiry-service').value;
+            const msg = document.getElementById('inquiry-msg').value;
+
+            const whatsappUrl = `https://wa.me/919341758079?text=Hello%20Archana,%20My%20name%20is%20${encodeURIComponent(name)}%20(${phone}).%20Service:%20${encodeURIComponent(service)}.%20Details:%20${encodeURIComponent(msg)}`;
+            
+            window.open(whatsappUrl, '_blank');
+            showToast("Redirecting to WhatsApp with your inquiry!");
+            event.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toast-msg');
+            if(!toast || !msgSpan) return;
+            msgSpan.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
